@@ -1,0 +1,45 @@
+server:
+  port: 8083
+spring:
+  application:
+    name: linkpay-order-bll
+
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        group: "SERVICE_GROUP"
+
+logging:
+  level:
+    org:
+      springframework: INFO
+    io:
+      seata: INFO
+
+openapi:
+  my:
+    base-path: 127.0.0.1:8085
+
+
+
+#xxl:
+#  job:
+#    admin:
+#      addresses: http://127.0.0.1:8080/xxl-job-admin
+#    accessToken: default_token
+#    executor:
+#      appname: linkpay-order-bll
+#      address:
+#      ip: 127.0.0.1
+#      port: 9999
+#      logpath: ./logs
+#      logretentiondays: 30
+
+jwt:
+  expiration: 6000000

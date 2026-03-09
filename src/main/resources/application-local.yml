@@ -1,0 +1,91 @@
+server:
+  port: 8093
+
+spring:
+  application:
+    name: linkpay-user-bll
+
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      database: 0
+
+  cloud:
+    nacos:
+      discovery:
+        enabled: true
+        server-addr: 127.0.0.1:8848
+        group: "SERVICE_GROUP"
+    alibaba:
+      seata:
+        tx-service-group: my_test_tx_group
+
+# custom setting
+  auth:
+    accessTokenDuration: 600 #秒
+    refreshTokenDuration: 2592000 #秒
+
+logging:
+  level:
+    org:
+      springframework: INFO
+    com:
+      linkpay:
+        userBase:
+          mapper: DEBUG
+    io:
+      seata: DEBUG
+
+#seata:
+#  registry:
+#    type: nacos
+#    nacos:
+#      application: seata-server
+#      server-addr: 127.0.0.1:8848 # Nacos 注册中心的地址
+#      group: "SEATA_GROUP" #分组
+#      namespace: ""
+#        username: "nacos"   #Nacos 注册中心的用户名
+#        password: "nacos"   # Nacos 注册中心的密码
+
+seata:
+  enabled: true
+  data-source-proxy-mode: XA
+  application-id: ${spring.application.name}
+  tx-service-group: my_test_tx_group
+
+  #  config:
+  #    type: file
+  #    file:
+  #      name: resources/file.conf #!!!
+  registry:
+    type: nacos
+    nacos:
+      # 需要和 server 端保持一致，即 server 在 nacos 中的名称，默认为 seata-server
+      application: seata-server
+      server-addr: '127.0.0.1:8848'
+      namespace: ''
+      group: 'SEATA_GROUP'
+      username: 'nacos'
+      password: 'nacos'
+
+  service:
+    vgroupMapping:
+      my_test_tx_group: default
+    default:
+      grouplist: "127.0.0.1:8091"
+    enableDegrade: false
+    disableGlobalTransaction: false
+
+#xxl:
+#  job:
+#    admin:
+#      addresses: http://127.0.0.1:8080/xxl-job-admin
+#    accessToken: default_token
+#    executor:
+#      appname: linkpay-order-bll
+#      address:
+#      ip: 127.0.0.1
+#      port: 9999
+#      logpath: ./logs
+#      logretentiondays: 30
