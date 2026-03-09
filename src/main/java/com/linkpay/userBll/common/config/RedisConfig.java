@@ -17,7 +17,8 @@ public class RedisConfig {
 
     @Bean
     LettuceConnectionFactory redisConnectionFactory(RedisProperties redisProperties) {
-        LettuceClientConfiguration lettuceClientConfiguration = LettuceClientConfiguration.builder().useSsl().disablePeerVerification().build();
+//        LettuceClientConfiguration lettuceClientConfiguration = LettuceClientConfiguration.builder().useSsl().disablePeerVerification().build();
+        LettuceClientConfiguration lettuceClientConfiguration = LettuceClientConfiguration.builder().build();
 
         RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
         redisStandaloneConfiguration.setHostName(redisProperties.getHost());
